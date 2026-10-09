@@ -427,11 +427,52 @@ export const flow: Record<string, FlowNode> = {
 
   obj_parttime: {
     id: 'obj_parttime',
-    title: 'Qualify: Part-Time Rebuttal',
+    title: 'Part-Time: Find Out Why First',
     isObjection: true,
-    script: "Yeah, I get wanting to dip a toe in first. Here's the thing though, because the rates come in {SAVINGS_CLAIM}, a lot of folks end up getting a dedicated full-time person for what they'd have spent on part-time help locally. It's a full 40-hour week over there, so you're getting all eight hours a day and still saving. If the numbers actually stacked up, would you be open to just keeping it as a full-time seat?",
+    script: "Sure, that's fair. Before I get into how it usually works, may I ask what's making you look at part-time rather than full-time?",
     waitForAnswer: true,
-    tip: "We only place full-time, dedicated talent — part-time/project reads as a non-dedicated (disqualified) lead. Approved reframe (Summer / Jimmy): 'eight hours paid anyway, you still save.' Convert to a full-time yes; if they'll only ever do part-time, they don't qualify. ANALYZER: Gate 3 needs 'full-time, dedicated, just for me' from the buyer's mouth — 'shared / project / a few hours' kills it.",
+    tip: "PROBE BEFORE YOU REBUT. This is the whole point of the step: the rebuttals were not matching the lead's actual reason, because nobody had asked for one. A budget answer was getting a workload reframe and the other way round, so the objection never got addressed and the lead heard a script.\n\nASK ONLY IF THEY HAVE NOT ALREADY SAID. If the reason came out on its own, do not make them repeat it, just take the branch that fits.\n\nNO REASON AND THEY WILL NOT BE DRAWN: take the exploring branch. It is the general-purpose one and it assumes nothing about their situation.\n\nWHY IT MATTERS BEYOND THIS CALL: we only place full-time dedicated talent, so part-time or project reads as a non-dedicated lead and does not qualify. This step is how a part-time opener becomes a full-time yes instead of a disqualification.",
+    options: [
+      { label: 'Still exploring / testing the water', next: 'obj_parttime_exploring', type: 'objection' },
+      { label: 'Budget / cost is the driver', next: 'obj_parttime_budget', type: 'objection' },
+      { label: 'Not enough workload for full-time', next: 'obj_parttime_workload', type: 'objection' },
+      { label: 'No reason given / would not say', next: 'obj_parttime_exploring', type: 'objection', vague: true },
+    ],
+  },
+
+  obj_parttime_exploring: {
+    id: 'obj_parttime_exploring',
+    title: 'Part-Time: They Are Still Exploring',
+    isObjection: true,
+    script: "Totally fair, and honestly that's a sensible way to start.\n\nThe thing most people in your spot find is that full-time gives them consistency and someone actually available when they need them. You get one person who learns how you work properly, rather than managing a part-timer or a run of short-term hires.\n\nIf the numbers stacked up, would you be open to just keeping it as a full-time seat?",
+    waitForAnswer: true,
+    tip: "Dipping a toe in is a reason to start, not a reason to stay small. Lead with consistency and availability, not with price: they have not raised cost, so do not hand them a cost worry they did not have.\n\nThis is also the fallback branch when no reason is offered, which is why it argues nothing about their budget or their workload.\n\nANALYZER: Gate 3 needs 'full-time, dedicated, just for me' from the buyer's own mouth. 'Shared / project / a few hours' kills it.",
+    options: [
+      { label: 'Open to a full-time seat', next: 'qualify_volume', type: 'positive', banks: ['full_time'] },
+      { label: 'Still only wants part-time', next: 'obj_not_interested_late', type: 'objection', refuses: ['full_time'] },
+    ],
+  },
+
+  obj_parttime_budget: {
+    id: 'obj_parttime_budget',
+    title: 'Part-Time: Budget Is The Driver',
+    isObjection: true,
+    script: "Completely understand, cost is usually the deciding bit.\n\nPart-time does look cheaper up front. The part that surprises most people is the all-in number, because offshore comes in at {SAVINGS_CLAIM}, so a full-time dedicated person often costs about what they were going to spend on part-time help locally. Same money, a full week, and someone who is only yours.\n\nIf that's roughly how it landed, would you be open to a full-time seat?",
+    waitForAnswer: true,
+    tip: "They have told you the constraint is money, so answer money. The approved reframe (Summer / Jimmy) is 'eight hours paid anyway, you still save' and it belongs here rather than in the other two branches.\n\nSay the saving as the ONE figure the rest of the script uses, and never quote a rate or a price for a specific partner. It is a range, not a quote.\n\nANALYZER: Gate 3 needs 'full-time, dedicated, just for me' from the buyer's own mouth. 'Shared / project / a few hours' kills it.",
+    options: [
+      { label: 'Open to a full-time seat', next: 'qualify_volume', type: 'positive', banks: ['full_time'] },
+      { label: 'Still only wants part-time', next: 'obj_not_interested_late', type: 'objection', refuses: ['full_time'] },
+    ],
+  },
+
+  obj_parttime_workload: {
+    id: 'obj_parttime_workload',
+    title: 'Part-Time: Not Enough Work For It',
+    isObjection: true,
+    script: "That's fair, and it's the most common reason people start part-time.\n\nWhat tends to happen is the work finds the seat. Once somebody is there full-time you end up handing over the things you'd been holding onto yourself, and you can take on new work without worrying about who's going to do it. And because the rates come in at {SAVINGS_CLAIM}, a full week usually costs less than people expect.\n\nIf that sounds closer to your situation, would you be open to a full-time seat?",
+    waitForAnswer: true,
+    tip: "Never tell them they have more work than they think. They know their own business and arguing the premise loses the call. The move is that a dedicated seat changes what they are willing to delegate, which is a different claim and a true one.\n\nCost comes in LAST here and only as reassurance. The constraint they named was capacity, not money, so leading with price answers a question they did not ask.\n\nIf the honest answer is that there is genuinely only a few hours of work and never more, that is a real disqualification. Do not force it.\n\nANALYZER: Gate 3 needs 'full-time, dedicated, just for me' from the buyer's own mouth. 'Shared / project / a few hours' kills it.",
     options: [
       { label: 'Open to a full-time seat', next: 'qualify_volume', type: 'positive', banks: ['full_time'] },
       { label: 'Still only wants part-time', next: 'obj_not_interested_late', type: 'objection', refuses: ['full_time'] },
