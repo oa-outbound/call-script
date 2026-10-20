@@ -3,7 +3,7 @@
 // Anthropic response. A text/plain content-type keeps this a CORS-simple request
 // (no preflight), which is what lets it work straight from the browser.
 export const AI_RELAY_URL =
-  'https://script.google.com/macros/s/AKfycby2akMg_lgj-eKdRsmylzVCnzPG_GOFrW1992Xb7rQNkQESzu7F_I2WY4CFk4jPPAoY/exec'
+  'https://script.google.com/macros/s/AKfycbw4huZsb8WzkZ_sCvJ-TSHYNC2XeKiTUNYAy3lUt1tHRol9nrUmvdlU60CgUUVGRFQ-/exec'
 
 /*
  * How long ONE attempt may take before it is abandoned and retried.
